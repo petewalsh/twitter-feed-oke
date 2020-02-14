@@ -43,13 +43,14 @@ public class SampleStreamExample {
 	private final ChunkedOutput<String> output;
 
 	public SampleStreamExample() {
-		System.setProperty("https.proxyHost", "adc-proxy.oracle.com");
-		System.setProperty("https.proxyPort", "80");
+		//System.setProperty("https.proxyHost", "adc-proxy.oracle.com");
+		//System.setProperty("https.proxyPort", "80");
 		output = new ChunkedOutput<String>(String.class);
 		engine = new ScriptEngineManager().getEngineByName("javascript");
 		StringBuilder sb = new StringBuilder(1024);
 		//need to start from the classloader to get file when traversing classpath jars for resource
 		URL fileurl = ClassLoader.getSystemResource("twitter-auth.json");
+		System.out.println(fileurl.toString());
 		requireNonNull(fileurl, "Could not find twitter-auth.json");
 		//we ensure stream and underlying file closes using Java7 try w/ resources stmt
 		try (Stream<String> stream = Files.lines(Paths.get(fileurl.toURI()), StandardCharsets.UTF_8)) {
